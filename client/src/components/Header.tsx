@@ -28,11 +28,11 @@ interface HeaderProps {
 
 export function Header({ onMenuClick }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { user } = useAuth();
+  const { user, logout, isLoggingOut } = useAuth();
   const { isDark, toggleTheme } = useThemeContext();
 
   const handleLogout = () => {
-    window.location.href = "/api/logout";
+    logout();
   };
 
   return (
@@ -106,9 +106,9 @@ export function Header({ onMenuClick }: HeaderProps) {
                   Profile
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
+                <DropdownMenuItem onClick={handleLogout} disabled={isLoggingOut}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Sign out
+                  {isLoggingOut ? "Signing out..." : "Sign out"}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

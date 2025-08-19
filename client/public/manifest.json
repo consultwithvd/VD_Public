@@ -1,0 +1,38 @@
+{
+  "name": "ViViD Global Services - Subscription Manager",
+  "short_name": "ViViD Subscriptions",
+  "description": "Internal subscription management system for ViViD Global Services team members",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#6E2E9A",
+  "theme_color": "#6E2E9A",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/ViViD-Round-1080px-2_1755642405935.png",
+      "sizes": "1080x1080",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/ViViD-Round-1080px-2_1755642405935.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/ViViD-Round-1080px-2_1755642405935.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": [
+    {
+      "src": "/assets/ViViD-Round-1080px-2_1755642405935.png",
+      "sizes": "1080x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

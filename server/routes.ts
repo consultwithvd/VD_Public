@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated } from "./auth";
 import {
   insertCustomerSchema,
   insertResellerSchema,
@@ -14,17 +14,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
+  // Auth routes are handled in setupAuth
 
   // Dashboard routes
   app.get('/api/dashboard/metrics', isAuthenticated, async (req, res) => {
@@ -233,7 +223,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const subscriptionData = insertSubscriptionSchema.parse({
         ...req.body,
-        createdBy: req.user.claims.sub,
+        createdBy: req.user.id,
       });
       const subscription = await storage.createSubscription(subscriptionData);
       res.status(201).json(subscription);
@@ -267,6 +257,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting subscription:", error);
       res.status(500).json({ message: "Failed to delete subscription" });
+    }
+  });
+
+  // Admin routes for data management
+  app.delete('/api/admin/clear-sample-data', isAuthenticated, async (req: any, res) => {
+    try {
+      // Only allow admins or specific users to clear data
+      const user = req.user;
+      if (user.role !== 'admin' && user.role !== 'user') {
+        return res.status(403).json({ message: "Not authorized to perform this action" });
+      }
+
+      await storage.clearAllSampleData();
+      res.json({ message: "Sample data cleared successfully" });
+    } catch (error) {
+      console.error("Error clearing sample data:", error);
+      res.status(500).json({ message: "Failed to clear sample data" });
     }
   });
 

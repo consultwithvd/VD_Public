@@ -1,4 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -6,11 +9,30 @@ import {
   AlertTriangle, 
   IndianRupee, 
   TrendingUp,
-  BarChart3
+  BarChart3,
+  Trash2,
+  AlertCircle
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import logo from "@assets/ViViD-Round-1080px-2_1755642405935.png";
 import { format, differenceInDays } from "date-fns";
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
   const { data: metrics, isLoading: metricsLoading } = useQuery({
     queryKey: ["/api/dashboard/metrics"],
   });
@@ -21,6 +43,26 @@ export default function Dashboard() {
 
   const { data: recentSubscriptions, isLoading: subscriptionsLoading } = useQuery({
     queryKey: ["/api/subscriptions"],
+  });
+
+  const clearDataMutation = useMutation({
+    mutationFn: async () => {
+      await apiRequest("DELETE", "/api/admin/clear-sample-data");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+      toast({
+        title: "Sample data cleared",
+        description: "All sample data has been successfully removed.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Failed to clear data",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
 
   const getStatusColor = (status: string) => {
@@ -58,8 +100,57 @@ export default function Dashboard() {
   return (
     <main className="p-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Dashboard</h1>
-        <p className="text-gray-600 dark:text-gray-400">Welcome back! Here's what's happening with your subscriptions.</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img src={logo} alt="ViViD Global Services" className="h-12 w-12" />
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">ViViD Global Services</h1>
+              <p className="text-lg text-vivid-purple font-semibold">Subscription Manager App</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">For Internal Access to ViViD Team Members Only</p>
+            </div>
+          </div>
+          
+          {/* Data Management Section */}
+          <div className="flex items-center space-x-4">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Clear Sample Data
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="flex items-center">
+                    <AlertCircle className="h-5 w-5 mr-2 text-destructive" />
+                    Clear All Sample Data
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete all sample customers, resellers, software, and subscriptions from the database. 
+                    This action cannot be undone. Are you sure you want to proceed?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => clearDataMutation.mutate()}
+                    disabled={clearDataMutation.isPending}
+                    className="bg-destructive hover:bg-destructive/90"
+                  >
+                    {clearDataMutation.isPending ? "Clearing..." : "Yes, Clear All Data"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </div>
+        
+        <div className="mt-4 p-4 bg-vivid-purple/5 border border-vivid-purple/20 rounded-lg">
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            Welcome back, <span className="font-semibold">{(user as any)?.firstName || (user as any)?.email}</span>! 
+            Here's an overview of your subscription management dashboard.
+          </p>
+        </div>
       </div>
 
       {/* Key Metrics Cards */}

@@ -7,6 +7,7 @@ import {
   emailReminders,
   type User,
   type UpsertUser,
+  type InsertUser,
   type Customer,
   type InsertCustomer,
   type Reseller,
@@ -23,8 +24,10 @@ import { db } from "./db";
 import { eq, desc, asc, and, or, like, gte, lte, count, sum, sql } from "drizzle-orm";
 
 export interface IStorage {
-  // User operations (required for Replit Auth)
+  // User operations (required for authentication)
   getUser(id: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
   upsertUser(user: UpsertUser): Promise<User>;
 
   // Customer operations
@@ -67,12 +70,25 @@ export interface IStorage {
   // Email reminder operations
   createEmailReminder(reminder: InsertEmailReminder): Promise<EmailReminder>;
   getEmailReminders(subscriptionId: string): Promise<EmailReminder[]>;
+
+  // Admin operations
+  clearAllSampleData(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
   // User operations
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async createUser(userData: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(userData).returning();
     return user;
   }
 
@@ -341,6 +357,16 @@ export class DatabaseStorage implements IStorage {
       .from(emailReminders)
       .where(eq(emailReminders.subscriptionId, subscriptionId))
       .orderBy(desc(emailReminders.sentAt));
+  }
+
+  // Admin operations
+  async clearAllSampleData(): Promise<void> {
+    // Clear in order due to foreign key constraints
+    await db.delete(emailReminders);
+    await db.delete(subscriptions);
+    await db.delete(customers);
+    await db.delete(resellers);
+    await db.delete(softwareCatalog);
   }
 }
 

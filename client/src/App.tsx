@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 
 // Pages
-import Landing from "@/pages/landing";
+import AuthPage from "@/pages/auth-page";
 import Dashboard from "@/pages/dashboard";
 import Subscriptions from "@/pages/subscriptions";
 import Customers from "@/pages/customers";
@@ -60,7 +60,7 @@ function Router() {
   return (
     <Switch>
       {!isAuthenticated ? (
-        <Route path="/" component={Landing} />
+        <Route path="/" component={AuthPage} />
       ) : (
         <>
           <Route path="/*?" component={AuthenticatedApp} />
