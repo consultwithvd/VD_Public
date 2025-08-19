@@ -20,7 +20,7 @@ import {
   type InsertEmailReminder,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, asc, and, or, like, gte, lte, count, sum } from "drizzle-orm";
+import { eq, desc, asc, and, or, like, gte, lte, count, sum, sql } from "drizzle-orm";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -311,14 +311,7 @@ export class DatabaseStorage implements IStorage {
     const [monthlyStats] = await db
       .select({
         revenue: sum(subscriptions.salesPrice),
-        profit: sum(
-          db.$with('profit_calc')
-            .as(
-              db.select({
-                profit: sql`${subscriptions.salesPrice} - ${subscriptions.purchasePrice} - ${subscriptions.commissionAmount}`
-              }).from(subscriptions)
-            )
-        )
+        profit: sql`SUM(${subscriptions.salesPrice} - ${subscriptions.purchasePrice} - COALESCE(${subscriptions.commissionAmount}, 0))`
       })
       .from(subscriptions)
       .where(

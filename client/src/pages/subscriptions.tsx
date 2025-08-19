@@ -87,7 +87,7 @@ export default function Subscriptions() {
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedSubscriptions(subscriptions?.map((s: any) => s.id) || []);
+      setSelectedSubscriptions((subscriptions as any)?.map((s: any) => s.id) || []);
     } else {
       setSelectedSubscriptions([]);
     }
@@ -154,7 +154,7 @@ export default function Subscriptions() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="">All Software</SelectItem>
-                  {software?.map((item: any) => (
+                  {(software as any)?.map((item: any) => (
                     <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
                   ))}
                 </SelectContent>
@@ -185,7 +185,7 @@ export default function Subscriptions() {
       <Card>
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle>All Subscriptions ({subscriptions?.length || 0})</CardTitle>
+            <CardTitle>All Subscriptions ({(subscriptions as any)?.length || 0})</CardTitle>
             <div className="flex space-x-2">
               <Button variant="outline" size="sm">
                 <Download className="h-4 w-4 mr-2" />
@@ -205,7 +205,7 @@ export default function Subscriptions() {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     <Checkbox
-                      checked={selectedSubscriptions.length === subscriptions?.length}
+                      checked={selectedSubscriptions.length === (subscriptions as any)?.length}
                       onCheckedChange={handleSelectAll}
                     />
                   </th>
@@ -236,7 +236,7 @@ export default function Subscriptions() {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {subscriptions?.map((subscription: any) => {
+                {(subscriptions as any)?.map((subscription: any) => {
                   const daysUntilExpiry = getDaysUntilExpiry(subscription.expiryDate);
                   const profit = Number(subscription.salesPrice) - Number(subscription.purchasePrice) - Number(subscription.commissionAmount || 0);
                   
@@ -326,7 +326,7 @@ export default function Subscriptions() {
                 })}
               </tbody>
             </table>
-            {!subscriptions?.length && (
+            {!(subscriptions as any)?.length && (
               <div className="text-center py-8">
                 <p className="text-gray-500 dark:text-gray-400">No subscriptions found</p>
               </div>

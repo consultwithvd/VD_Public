@@ -84,17 +84,17 @@ export function Header({ onMenuClick }: HeaderProps) {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center space-x-3 p-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.profileImageUrl || ""} alt={user?.firstName || ""} />
+                    <AvatarImage src={(user as any)?.profileImageUrl || ""} alt={(user as any)?.firstName || ""} />
                     <AvatarFallback>
-                      {user?.firstName?.[0] || user?.email?.[0] || "U"}
+                      {(user as any)?.firstName?.[0] || (user as any)?.email?.[0] || "U"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="text-left hidden sm:block">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      {user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : user?.email}
+                      {(user as any)?.firstName ? `${(user as any).firstName} ${(user as any).lastName || ''}`.trim() : (user as any)?.email}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {user?.role || "User"}
+                      {(user as any)?.role || "User"}
                     </p>
                   </div>
                   <ChevronDown className="h-4 w-4 text-gray-400" />

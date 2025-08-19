@@ -151,7 +151,7 @@ export function AddSubscriptionModal({ open, onClose }: AddSubscriptionModalProp
                     <SelectValue placeholder="Select Software" />
                   </SelectTrigger>
                   <SelectContent>
-                    {software?.map((item: any) => (
+                    {(software as any)?.map((item: any) => (
                       <SelectItem key={item.id} value={item.id}>
                         {item.brand} {item.name}
                       </SelectItem>
@@ -184,7 +184,7 @@ export function AddSubscriptionModal({ open, onClose }: AddSubscriptionModalProp
                     <SelectValue placeholder="Select Customer" />
                   </SelectTrigger>
                   <SelectContent>
-                    {customers?.map((customer: any) => (
+                    {(customers as any)?.map((customer: any) => (
                       <SelectItem key={customer.id} value={customer.id}>
                         {customer.name} - {customer.company}
                       </SelectItem>
@@ -204,7 +204,7 @@ export function AddSubscriptionModal({ open, onClose }: AddSubscriptionModalProp
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="">Direct Sale</SelectItem>
-                    {resellers?.map((reseller: any) => (
+                    {(resellers as any)?.map((reseller: any) => (
                       <SelectItem key={reseller.id} value={reseller.id}>
                         {reseller.name} - {reseller.company}
                       </SelectItem>
@@ -262,7 +262,7 @@ export function AddSubscriptionModal({ open, onClose }: AddSubscriptionModalProp
                   <Checkbox
                     id="gstIncluded"
                     checked={gstIncluded}
-                    onCheckedChange={setGstIncluded}
+                    onCheckedChange={(checked) => setGstIncluded(checked as boolean)}
                   />
                   <Label htmlFor="gstIncluded">Add GST (18%)</Label>
                 </div>
@@ -270,7 +270,7 @@ export function AddSubscriptionModal({ open, onClose }: AddSubscriptionModalProp
                   <Checkbox
                     id="tdsDeducted"
                     checked={tdsDeducted}
-                    onCheckedChange={setTdsDeducted}
+                    onCheckedChange={(checked) => setTdsDeducted(checked as boolean)}
                   />
                   <Label htmlFor="tdsDeducted">TDS Applicable</Label>
                 </div>

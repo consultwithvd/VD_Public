@@ -81,7 +81,7 @@ const ChartLegendContent = forwardRef<
     {...props}
   />
 ));
-ChartLegendContent.displayName = = "ChartLegendContent";
+ChartLegendContent.displayName = "ChartLegendContent";
 
 export {
   Chart,

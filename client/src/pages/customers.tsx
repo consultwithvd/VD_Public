@@ -45,7 +45,7 @@ export default function Customers() {
     }
   };
 
-  const filteredCustomers = customers?.filter((customer: any) =>
+  const filteredCustomers = (customers as any)?.filter((customer: any) =>
     customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     customer.company?.toLowerCase().includes(searchQuery.toLowerCase())

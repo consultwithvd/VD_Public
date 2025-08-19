@@ -167,7 +167,7 @@ export function AddResellerModal({ open, onClose }: AddResellerModalProps) {
                 <Checkbox
                   id="isActive"
                   checked={isActive}
-                  onCheckedChange={setIsActive}
+                  onCheckedChange={(checked) => setIsActive(checked as boolean)}
                 />
                 <Label htmlFor="isActive" className="text-sm">
                   Active reseller
@@ -178,7 +178,7 @@ export function AddResellerModal({ open, onClose }: AddResellerModalProps) {
                 <Checkbox
                   id="hasBankDetails"
                   checked={hasBankDetails}
-                  onCheckedChange={setHasBankDetails}
+                  onCheckedChange={(checked) => setHasBankDetails(checked as boolean)}
                 />
                 <Label htmlFor="hasBankDetails" className="text-sm">
                   Has bank details on file

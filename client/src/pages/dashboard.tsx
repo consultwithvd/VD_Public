@@ -73,7 +73,7 @@ export default function Dashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Subscriptions</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {metrics?.activeSubscriptions || 0}
+                  {(metrics as any)?.activeSubscriptions || 0}
                 </p>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function Dashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Expiring Soon</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {metrics?.expiringSoon || 0}
+                  {(metrics as any)?.expiringSoon || 0}
                 </p>
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Monthly Revenue</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {formatCurrency(metrics?.monthlyRevenue || 0)}
+                  {formatCurrency((metrics as any)?.monthlyRevenue || 0)}
                 </p>
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function Dashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Monthly Profit</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {formatCurrency(metrics?.monthlyProfit || 0)}
+                  {formatCurrency((metrics as any)?.monthlyProfit || 0)}
                 </p>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function Dashboard() {
               <div>Loading renewals...</div>
             ) : (
               <div className="space-y-4">
-                {upcomingRenewals?.slice(0, 3).map((renewal: any) => {
+                {(upcomingRenewals as any)?.slice(0, 3).map((renewal: any) => {
                   const daysLeft = getDaysUntilExpiry(renewal.expiryDate);
                   return (
                     <div key={renewal.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -172,7 +172,7 @@ export default function Dashboard() {
                     </div>
                   );
                 })}
-                {!upcomingRenewals?.length && (
+                {!(upcomingRenewals as any)?.length && (
                   <p className="text-gray-500 dark:text-gray-400 text-center py-4">
                     No upcoming renewals in the next 30 days
                   </p>
@@ -239,7 +239,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {recentSubscriptions?.slice(0, 5).map((subscription: any) => (
+                  {(recentSubscriptions as any)?.slice(0, 5).map((subscription: any) => (
                     <tr key={subscription.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -276,7 +276,7 @@ export default function Dashboard() {
                   ))}
                 </tbody>
               </table>
-              {!recentSubscriptions?.length && (
+              {!(recentSubscriptions as any)?.length && (
                 <p className="text-gray-500 dark:text-gray-400 text-center py-8">
                   No subscriptions found
                 </p>

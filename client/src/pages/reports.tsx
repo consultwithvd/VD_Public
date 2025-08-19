@@ -181,7 +181,7 @@ export default function Reports() {
               <Checkbox
                 id="includeGST"
                 checked={includeGST}
-                onCheckedChange={setIncludeGST}
+                onCheckedChange={(checked) => setIncludeGST(checked as boolean)}
               />
               <label htmlFor="includeGST" className="text-sm text-gray-700 dark:text-gray-300">
                 Include GST Details
@@ -191,7 +191,7 @@ export default function Reports() {
               <Checkbox
                 id="sendEmail"
                 checked={sendEmail}
-                onCheckedChange={setSendEmail}
+                onCheckedChange={(checked) => setSendEmail(checked as boolean)}
               />
               <label htmlFor="sendEmail" className="text-sm text-gray-700 dark:text-gray-300">
                 Send via Gmail

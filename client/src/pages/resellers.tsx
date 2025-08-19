@@ -46,7 +46,7 @@ export default function Resellers() {
     }
   };
 
-  const filteredResellers = resellers?.filter((reseller: any) =>
+  const filteredResellers = (resellers as any)?.filter((reseller: any) =>
     reseller.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     reseller.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     reseller.company?.toLowerCase().includes(searchQuery.toLowerCase())
