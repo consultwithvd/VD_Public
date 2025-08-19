@@ -1,0 +1,33 @@
+Build a complete internal web and Android application (to be used by ViViD Global team Members only) called “ViViD Global Services' Subscriptions Manager” for managing our customer’s software subscriptions, renewals, customers, and reseller and their commissions. The app is internal-only and professional.
+Features:
+Authentication: Google login and custom email/password login (internal IDs). Role-based access for internal team members only. User profile with photo, name, and contact details. Branding customization for the company (logo, address, contact info).
+
+
+Subscription Management: Add/Edit/Delete subscriptions with fields: Software Name, Software Brand, sales prices, purchase prices (example Microsoft 365, Google Workspace, Google Cloud, Azure), Customer, Reseller, Start/Expiry Date, Renewal Frequency, reseller Commission, software sales Pricing, Cost, Profit, with option to final prices after adding GST 18%, TDS, and custom fields. Track revenue, costs, and profits.
+
+
+Customer Management: Add/edit customer profiles, assign subscriptions, track renewal history, and communication logs.
+
+
+Separate Reseller Management: create, delete, Manage, Assign commission product wise, track payments (paid/unpaid/partial paid), and performance charts.
+
+
+App should be capable for sending Automated Reminders using Gmail free API: Send Gmail reminders (30, 15, 7, 1 day before expiry), also after expired frequency reminders in same way, to customers and internal team. Customizable email templates. Optional: WhatsApp reminders via whatsapp QR login if possible.
+
+
+Dashboard & Reporting: Metrics for active subscriptions, expiring soon, expired or renewal overdue, revenue in INR, and profit in INR. Color-coded statuses (Green=Active, Yellow=Expiring soon, Red=Overdue, Blue=Recently renewed). Generate reports (renewal, revenue, profit, reseller, customer) with and without GST. Export as PDF, Excel, CSV. Send via Gmail. Universal search across subscriptions, customers, resellers, and sales team.
+
+
+Notifications: Web and Android push notifications for upcoming renewals. Real-time dashboard updates.
+
+
+UI/UX: Responsive for desktop, mobile. Dark/light mode toggle. Professional clean design using brand colors: Dark Purple #6E2E9A, Pink/Magenta #D33E89, Orange #F7941E, Dark Blue/Purple #53438A. Resize icons proper sized for visual clarity.
+
+
+Technical Stack: Web: ReactJS / Next.js. Android: Flutter or React Native. Backend: Node.js / Firebase. Database: Firestore / PostgreSQL. Gmail API for email reminders. (or best as per your choice)
+
+
+Advanced Features (Optional Post-MVP): Profitability analytics, forecasting, integration with Zoho Books India, predictive trends, automated profit alerts, WhatsApp reminders using whatsapp login via QR code, not with whatsapp business API as I dont have API.
+
+
+Deliverables: Fully working web and Android apps with source code, dashboard, automated Gmail reminders, database integration, and deployment instructions. Include comments for clarity and future enhancements. Ensure the app is production-ready.
