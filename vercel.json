@@ -1,29 +1,24 @@
 {
   "version": 2,
-  "projects": {
-    "client": {
-      "root": "client",
-      "installCommand": "npm install",
-      "buildCommand": "npm run build",
-      "outputDirectory": "projects.client"  // adjust if Vite builds to 'dist' or 'build'
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
     },
-    "server": {
-      "root": "server",
-      "functions": {
-        "**/*.ts": {
-          "runtime": "vercel-functions@1.0.0"
-        }
-      }
+    {
+      "src": "server/**/*.ts",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/$1.ts"
+      "dest": "/server/$1.ts"
     },
     {
       "src": "/(.*)",
-      "dest": "client/$1"
+      "dest": "/client/$1"
     }
   ]
 }
